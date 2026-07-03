@@ -227,6 +227,53 @@
         }
       }
 
+      .monogram-wrap {
+        position: relative;
+        z-index: 6;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.85);
+        animation: monoIn 1s cubic-bezier(0.3, 0.6, 0.15, 1) forwards;
+        animation-delay: 0.15s;
+      }
+      .monogram {
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        border: 1px solid var(--gold-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(74, 20, 32, 0.28);
+        backdrop-filter: blur(2px);
+        box-shadow: 0 0 0 4px rgba(238, 203, 106, 0.08);
+      }
+      .monogram-text {
+        font-family: "Cinzel", serif;
+        font-size: 21px;
+        letter-spacing: 0.03em;
+        color: var(--gold-bright);
+        display: flex;
+        align-items: baseline;
+        gap: 3px;
+      }
+      .monogram-amp {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 13px;
+        color: var(--gold-soft);
+      }
+
+      /* ---------- footer credit ---------- */
+      .footer-credit {
+        margin-top: 18px;
+        font-family: "EB Garamond", serif;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: rgba(247, 236, 217, 0.45);
+      }
+
       .hero-names {
         position: relative;
         z-index: 6;
@@ -734,6 +781,14 @@
       <div class="hero-bg"></div>
       <div class="hero-overlay"></div>
 
+      <div class="monogram-wrap reveal">
+        <div class="monogram">
+          <span class="monogram-text"
+            >S<span class="monogram-amp">&amp;</span>K</span
+          >
+        </div>
+      </div>
+
       <svg
         class="gopuram"
         viewBox="0 0 640 220"
@@ -841,10 +896,10 @@
         <div class="muhurtham-day te te-font">గురువారం, 27 ఆగస్టు 2026</div>
 
         <div class="muhurtham-time en">
-          9:53 – 10:03<span class="amp">am</span>
+          9:53 – 10:04<span class="amp">am</span>
         </div>
         <div class="muhurtham-time te te-font">
-          9:53 – 10:03<span class="amp">ఉదయం</span>
+          9:53 – 10:04<span class="amp">ఉదయం</span>
         </div>
 
         <span class="lagnam-pill en">Thula Lagnam</span>
@@ -1000,6 +1055,7 @@
         <div class="footer-fine te te-font">
           సుమంత్ &amp; కల్పన · 27 ఆగస్టు 2026
         </div>
+        <div class="footer-credit">Designed by Sumanth Sanathi</div>
       </div>
     </footer>
 
