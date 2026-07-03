@@ -116,28 +116,59 @@
     margin-top:38px;
   }
 
-  .emblem-wrap{
+  .gopuram-path{
+    stroke-dasharray:1;
+    stroke-dashoffset:1;
+    animation:gopDraw 1.7s cubic-bezier(.3,.6,.15,1) forwards;
+    animation-delay:0.1s;
+  }
+  .gopuram-base{
+    stroke-dasharray:1;
+    stroke-dashoffset:1;
+    animation:gopDraw 0.9s ease-out forwards;
+    animation-delay:1.5s;
+  }
+  .gopuram-dot{
+    opacity:0;
+    animation:dotFade 0.5s ease-out forwards;
+    animation-delay:1.5s;
+  }
+  @keyframes gopDraw{ to{ stroke-dashoffset:0; } }
+  @keyframes dotFade{ to{ opacity:1; } }
+
+  .mark-wrap{
     position:relative;
     z-index:6;
-    margin-top:18px;
+    margin-top:26px;
     display:flex;
-    flex-direction:column;
     align-items:center;
+    justify-content:center;
+    gap:14px;
   }
-  .emblem{
-    width:108px; height:108px;
-    border-radius:50%;
-    background:radial-gradient(circle at 32% 28%, var(--gold-bright), var(--gold) 55%, #8f6f18 100%);
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 22px rgba(0,0,0,0.45), inset 0 2px 4px rgba(255,255,255,0.5), inset 0 -6px 10px rgba(0,0,0,0.25);
-    border:3px solid var(--ivory-2);
+  .mark-line{
+    height:1px;
+    width:46px;
+    background:linear-gradient(90deg, transparent, var(--gold-soft));
+    transform-origin:right center;
+    animation:lineGrow 0.9s ease-out forwards;
+    animation-delay:1.5s;
+    transform:scaleX(0);
   }
-  .emblem span{
-    font-family:'Cinzel', serif;
-    font-weight:700;
-    font-size:34px;
-    color:var(--maroon-deep);
-    letter-spacing:0.02em;
+  .mark-line.right{
+    background:linear-gradient(90deg, var(--gold-soft), transparent);
+    transform-origin:left center;
+  }
+  @keyframes lineGrow{ to{ transform:scaleX(1); } }
+  .mark-diamond{
+    width:9px; height:9px;
+    background:var(--gold-bright);
+    transform:rotate(45deg) scale(0);
+    animation:diamondPop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+    animation-delay:2.15s;
+  }
+  @keyframes diamondPop{ to{ transform:rotate(45deg) scale(1); } }
+  @keyframes monoIn{
+    to{ opacity:1; transform:scale(1); }
   }
 
   .hero-names{
@@ -461,12 +492,14 @@
   }
   .footer-content{ position:relative; z-index:3; padding:60px 24px; }
   .footer-mark{
-    font-family:'Cinzel', serif;
-    font-size:28px;
-    letter-spacing:0.1em;
-    color:var(--gold-bright);
-    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:22px;
   }
+  .footer-mark .mark-line{ width:38px; animation:none; transform:scaleX(1); }
+  .footer-mark .mark-diamond{ width:7px; height:7px; animation:none; transform:rotate(45deg) scale(1); }
   .footer-note{
     font-family:'Cormorant Garamond', serif;
     font-style:italic;
@@ -506,16 +539,18 @@
         <stop offset="100%" stop-color="#a9800f"/>
       </linearGradient>
     </defs>
-    <!-- tiered gopuram silhouette -->
+    <!-- tiered gopuram silhouette, drawn on load -->
     <g fill="none" stroke="url(#goldline)" stroke-width="2.2" opacity="0.92">
-      <path d="M60,210 Q60,150 120,140 Q80,120 100,90 Q140,105 150,75 Q170,95 200,70 Q230,95 250,60 Q270,90 320,40 Q370,90 390,60 Q410,95 440,70 Q470,95 490,75 Q500,105 540,90 Q560,120 520,140 Q580,150 580,210"/>
-      <circle cx="320" cy="30" r="7" fill="#f0c05a" stroke="none"/>
-      <path d="M20,210 L620,210" stroke-width="1.4" opacity="0.6"/>
+      <path class="gopuram-path" pathLength="1" d="M60,210 Q60,150 120,140 Q80,120 100,90 Q140,105 150,75 Q170,95 200,70 Q230,95 250,60 Q270,90 320,40 Q370,90 390,60 Q410,95 440,70 Q470,95 490,75 Q500,105 540,90 Q560,120 520,140 Q580,150 580,210"/>
+      <circle class="gopuram-dot" cx="320" cy="30" r="7" fill="#f0c05a" stroke="none"/>
+      <path class="gopuram-base" pathLength="1" d="M20,210 L620,210" stroke-width="1.4" opacity="0.6"/>
     </g>
   </svg>
 
-  <div class="emblem-wrap reveal">
-    <div class="emblem"><span>SK</span></div>
+  <div class="mark-wrap reveal">
+    <span class="mark-line"></span>
+    <span class="mark-diamond"></span>
+    <span class="mark-line right"></span>
   </div>
 
   <div class="hero-names reveal">
@@ -635,7 +670,11 @@
   <div class="footer-bg"></div>
   <div class="footer-overlay"></div>
   <div class="footer-content reveal">
-    <div class="footer-mark">SK</div>
+    <div class="footer-mark">
+      <span class="mark-line"></span>
+      <span class="mark-diamond"></span>
+      <span class="mark-line right"></span>
+    </div>
     <p class="footer-note en">Your presence is the greatest gift of all —<br>we can't wait to celebrate with you.</p>
     <p class="footer-note te te-font">మీ ఆశీర్వాద సమక్షమే మాకు అమూల్యమైన కానుక —<br>మీతో కలిసి వేడుకను జరుపుకోవాలని ఎదురుచూస్తున్నాము.</p>
     <div class="footer-fine en">Sumanth &amp; Kalpana · 27 August 2026</div>
