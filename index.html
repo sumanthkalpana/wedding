@@ -1,709 +1,1032 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sumanth weds Kalpana</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Baloo+Tammudu+2:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --maroon-deep:   #4a1420;
-    --maroon:        #6b1e2c;
-    --maroon-light:  #8a2e3d;
-    --gold:          #c9a227;
-    --gold-bright:   #eecb6a;
-    --gold-soft:     #d9bd76;
-    --ivory:         #f7ecd9;
-    --ivory-2:       #fbf5e8;
-    --ink:           #3a0e14;
-    --shadow-deep: 0 20px 60px rgba(20,4,8,0.45);
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-
-  html{scroll-behavior:smooth;}
-
-  body{
-    background: var(--maroon-deep);
-    color: var(--ivory);
-    font-family:'EB Garamond', serif;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  body[data-lang="te"] .en{display:none;}
-  body[data-lang="en"] .te{display:none;}
-  body[data-lang="te"] .te-font{font-family:'Baloo Tammudu 2', 'EB Garamond', sans-serif;}
-
-  /* ---------- reduced motion ---------- */
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
-  }
-
-  /* ---------- language toggle ---------- */
-  .lang-toggle{
-    position:fixed;
-    top:16px; right:16px;
-    z-index:200;
-    display:flex;
-    background:rgba(74,20,32,0.55);
-    border:1px solid rgba(238,203,106,0.5);
-    border-radius:999px;
-    padding:4px;
-    backdrop-filter: blur(6px);
-  }
-  .lang-toggle button{
-    border:none;
-    background:transparent;
-    color:var(--ivory);
-    font-family:'Cinzel',serif;
-    font-size:12px;
-    letter-spacing:0.08em;
-    padding:7px 16px;
-    border-radius:999px;
-    cursor:pointer;
-    transition:all .35s ease;
-  }
-  .lang-toggle button.active{
-    background:linear-gradient(135deg,var(--gold-bright),var(--gold));
-    color:var(--maroon-deep);
-    font-weight:700;
-    box-shadow:0 2px 10px rgba(0,0,0,0.3);
-  }
-  .lang-toggle button.te-btn{font-family:'Baloo Tammudu 2', sans-serif;}
-
-  /* ---------- reveal on scroll (minimal, fade only) ---------- */
-  .reveal{
-    opacity:0;
-    transform:translateY(10px);
-    transition:opacity 1.1s ease-out, transform 1.1s ease-out;
-  }
-  .reveal.in{ opacity:1; transform:translateY(0); }
-
-  /* ================= HERO ================= */
-  .hero{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-end;
-    text-align:center;
-    overflow:hidden;
-    padding-bottom:56px;
-  }
-  .hero-bg{
-    position:absolute; inset:0;
-    background-image:url('images/hero-bg.jpg');
-    background-size:cover;
-    background-position:center 22%;
-    transform:scale(1.04);
-  }
-  .hero-overlay{
-    position:absolute; inset:0;
-    background:
-      linear-gradient(to bottom, rgba(74,20,32,0.35) 0%, rgba(58,14,20,0.25) 38%, rgba(45,10,16,0.72) 78%, rgba(35,8,12,0.92) 100%),
-      linear-gradient(120deg, rgba(74,20,32,0.35), rgba(30,7,11,0.35));
-  }
-
-  .gopuram{
-    position:relative;
-    z-index:5;
-    width:100%;
-    max-width:640px;
-    margin-top:38px;
-  }
-
-  .gopuram-path{
-    stroke-dasharray:1;
-    stroke-dashoffset:1;
-    animation:gopDraw 1.7s cubic-bezier(.3,.6,.15,1) forwards;
-    animation-delay:0.1s;
-  }
-  .gopuram-base{
-    stroke-dasharray:1;
-    stroke-dashoffset:1;
-    animation:gopDraw 0.9s ease-out forwards;
-    animation-delay:1.5s;
-  }
-  .gopuram-dot{
-    opacity:0;
-    animation:dotFade 0.5s ease-out forwards;
-    animation-delay:1.5s;
-  }
-  @keyframes gopDraw{ to{ stroke-dashoffset:0; } }
-  @keyframes dotFade{ to{ opacity:1; } }
-
-  .mark-wrap{
-    position:relative;
-    z-index:6;
-    margin-top:26px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-  }
-  .mark-line{
-    height:1px;
-    width:46px;
-    background:linear-gradient(90deg, transparent, var(--gold-soft));
-    transform-origin:right center;
-    animation:lineGrow 0.9s ease-out forwards;
-    animation-delay:1.5s;
-    transform:scaleX(0);
-  }
-  .mark-line.right{
-    background:linear-gradient(90deg, var(--gold-soft), transparent);
-    transform-origin:left center;
-  }
-  @keyframes lineGrow{ to{ transform:scaleX(1); } }
-  .mark-diamond{
-    width:9px; height:9px;
-    background:var(--gold-bright);
-    transform:rotate(45deg) scale(0);
-    animation:diamondPop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
-    animation-delay:2.15s;
-  }
-  @keyframes diamondPop{ to{ transform:rotate(45deg) scale(1); } }
-  @keyframes monoIn{
-    to{ opacity:1; transform:scale(1); }
-  }
-
-  .hero-names{
-    position:relative; z-index:6;
-    margin-top:20px;
-    padding:0 20px;
-  }
-  .hero-eyebrow{
-    font-family:'Cinzel', serif;
-    font-size:11px;
-    letter-spacing:0.42em;
-    color:var(--gold-bright);
-    text-transform:uppercase;
-    margin-bottom:14px;
-  }
-  .hero-eyebrow.te-font{ letter-spacing:0.1em; }
-
-  .hero-title{
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-size:clamp(38px, 8vw, 74px);
-    line-height:1.08;
-    color:var(--ivory-2);
-    text-shadow:0 4px 26px rgba(0,0,0,0.55);
-  }
-  .hero-title .weds{
-    display:block;
-    font-style:italic;
-    font-weight:500;
-    font-size:0.4em;
-    color:var(--gold-bright);
-    margin:10px 0;
-    letter-spacing:0.15em;
-  }
-  .hero-title.te-font{
-    font-weight:600;
-    font-size:clamp(34px, 7.4vw, 62px);
-  }
-  .hero-title.te-font .weds{
-    font-style:normal;
-    font-size:0.44em;
-  }
-
-  .hero-date{
-    margin-top:22px;
-    font-family:'Cinzel', serif;
-    font-size:13px;
-    letter-spacing:0.32em;
-    color:var(--ivory);
-    text-transform:uppercase;
-  }
-  .hero-date.te-font{ font-family:'Baloo Tammudu 2', sans-serif; letter-spacing:0.06em; font-size:15px;}
-
-  .scroll-cue{
-    position:relative; z-index:6;
-    margin-top:34px;
-    width:22px; height:36px;
-    border:2px solid var(--gold-soft);
-    border-radius:14px;
-    display:flex; justify-content:center; padding-top:6px;
-  }
-  .scroll-cue::before{
-    content:'';
-    width:4px;height:8px;
-    background:var(--gold-bright);
-    border-radius:3px;
-    animation:sc 3.2s ease-in-out infinite;
-  }
-  @keyframes sc{
-    0%{ transform:translateY(0); opacity:0.9;}
-    70%{ transform:translateY(7px); opacity:0.25;}
-    100%{ transform:translateY(0); opacity:0;}
-  }
-
-  /* ================= SHARED SECTION STYLES ================= */
-  .section{
-    position:relative;
-    padding:90px 22px;
-    background:
-      radial-gradient(1200px 600px at 50% -10%, rgba(107,30,44,0.5), transparent 60%),
-      var(--maroon-deep);
-  }
-  .section-eyebrow{
-    text-align:center;
-    font-family:'Cinzel', serif;
-    font-size:11px;
-    letter-spacing:0.4em;
-    text-transform:uppercase;
-    color:var(--gold-bright);
-    margin-bottom:12px;
-  }
-  .section-eyebrow.te-font{ letter-spacing:0.08em; font-size:14px;}
-  .section-title{
-    text-align:center;
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-style:italic;
-    font-size:clamp(30px,5.6vw,46px);
-    color:var(--ivory-2);
-    margin-bottom:56px;
-  }
-  .section-title.te-font{ font-style:normal; font-weight:600; }
-
-  /* ---------- ornate card ---------- */
-  .card{
-    max-width:560px;
-    margin:0 auto;
-    background:linear-gradient(180deg, rgba(247,236,217,0.06), rgba(247,236,217,0.02));
-    border:1px solid rgba(201,162,39,0.45);
-    border-radius:6px;
-    padding:44px 30px 40px;
-    position:relative;
-    box-shadow:var(--shadow-deep);
-  }
-  .card::before, .card::after{
-    content:'';
-    position:absolute;
-    width:34px;height:34px;
-    border:2px solid var(--gold);
-    opacity:0.85;
-  }
-  .card::before{ top:10px; left:10px; border-right:none; border-bottom:none; }
-  .card::after{ bottom:10px; right:10px; border-left:none; border-top:none; }
-
-  .card-icon{
-    display:flex; justify-content:center; margin-bottom:18px;
-  }
-  .card-icon svg{ width:46px; height:46px; }
-
-  .muhurtham-day{
-    text-align:center;
-    font-family:'Cinzel', serif;
-    font-size:15px;
-    letter-spacing:0.14em;
-    color:var(--gold-bright);
-    margin-bottom:6px;
-  }
-  .muhurtham-day.te-font{ font-family:'Baloo Tammudu 2',sans-serif; letter-spacing:0.03em; font-size:17px;}
-
-  .muhurtham-time{
-    text-align:center;
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-size:clamp(34px,6vw,50px);
-    color:var(--ivory-2);
-    margin:8px 0 10px;
-  }
-  .muhurtham-time .amp{
-    font-size:0.42em;
-    letter-spacing:0.1em;
-    color:var(--gold-soft);
-    margin-left:6px;
-    font-style:italic;
-  }
-
-  .lagnam-pill{
-    display:block;
-    width:fit-content;
-    margin:18px auto 0;
-    padding:9px 26px;
-    border:1px solid var(--gold);
-    border-radius:999px;
-    font-family:'Cinzel', serif;
-    font-size:13px;
-    letter-spacing:0.18em;
-    color:var(--gold-bright);
-    text-transform:uppercase;
-  }
-  .lagnam-pill.te-font{ font-family:'Baloo Tammudu 2', sans-serif; letter-spacing:0.03em; font-size:15px; }
-
-  .muhurtham-sub{
-    text-align:center;
-    margin-top:22px;
-    font-size:17px;
-    color:var(--ivory);
-    opacity:0.85;
-    font-style:italic;
-    line-height:1.6;
-  }
-  .muhurtham-sub.te-font{ font-family:'Baloo Tammudu 2',sans-serif; font-style:normal; font-size:16px;}
-
-  /* ---------- venue section ---------- */
-  .venue-section{
-    background:
-      linear-gradient(180deg, var(--maroon-deep), var(--maroon) 40%, var(--maroon-deep));
-  }
-  .venue-name{
-    text-align:center;
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-size:clamp(28px,5.2vw,38px);
-    color:var(--gold-bright);
-    margin-bottom:10px;
-  }
-  .venue-name.te-font{ font-weight:600; }
-  .venue-address{
-    text-align:center;
-    font-size:18px;
-    line-height:1.7;
-    color:var(--ivory);
-    opacity:0.92;
-    margin-bottom:8px;
-  }
-  .venue-address.te-font{ font-family:'Baloo Tammudu 2',sans-serif; font-size:17px; }
-
-  .lunch-note{
-    text-align:center;
-    margin-top:20px;
-    font-family:'Cinzel', serif;
-    font-size:12px;
-    letter-spacing:0.28em;
-    text-transform:uppercase;
-    color:var(--gold-soft);
-  }
-  .lunch-note.te-font{ font-family:'Baloo Tammudu 2', sans-serif; letter-spacing:0.05em; font-size:15px;}
-
-  .qr-block{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    margin-top:34px;
-    padding-top:30px;
-    border-top:1px dashed rgba(201,162,39,0.4);
-  }
-  .qr-frame{
-    width:150px; height:150px;
-    padding:10px;
-    background:var(--ivory-2);
-    border-radius:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    display:flex; align-items:center; justify-content:center;
-    transition:transform .35s ease, box-shadow .35s ease;
-  }
-  .qr-frame:hover{ transform:translateY(-4px) scale(1.03); box-shadow:0 16px 38px rgba(0,0,0,0.5); }
-  .qr-frame img{ width:100%; height:100%; }
-  .qr-caption{
-    margin-top:14px;
-    font-size:14px;
-    letter-spacing:0.06em;
-    color:var(--ivory);
-    opacity:0.85;
-    text-align:center;
-  }
-  .qr-caption.te-font{ font-family:'Baloo Tammudu 2',sans-serif; font-size:15px;}
-
-  .directions-btn{
-    margin-top:18px;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:12px 28px;
-    background:linear-gradient(135deg,var(--gold-bright),var(--gold));
-    color:var(--maroon-deep);
-    font-family:'Cinzel', serif;
-    font-weight:700;
-    font-size:12px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    text-decoration:none;
-    border-radius:999px;
-    box-shadow:0 8px 22px rgba(0,0,0,0.35);
-    transition:transform .3s ease, box-shadow .3s ease;
-  }
-  .directions-btn.te-font{ font-family:'Baloo Tammudu 2', sans-serif; letter-spacing:0.02em; font-size:14px; font-weight:600;}
-  .directions-btn:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,0.45); }
-  .directions-btn svg{ width:15px; height:15px; }
-
-  /* ---------- family section ---------- */
-  .family-grid{
-    max-width:640px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:28px;
-  }
-  @media (max-width:540px){ .family-grid{ grid-template-columns:1fr; gap:34px; } }
-  .family-col{ text-align:center; }
-  .family-role{
-    font-family:'Cinzel', serif;
-    font-size:11px;
-    letter-spacing:0.3em;
-    text-transform:uppercase;
-    color:var(--gold-soft);
-    margin-bottom:10px;
-  }
-  .family-role.te-font{ letter-spacing:0.05em; font-size:14px; }
-  .family-name{
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-size:26px;
-    color:var(--ivory-2);
-    margin-bottom:10px;
-  }
-  .family-parents{
-    font-size:15.5px;
-    color:var(--ivory);
-    opacity:0.82;
-    line-height:1.7;
-  }
-  .family-parents.te-font{ font-family:'Baloo Tammudu 2',sans-serif; font-size:15px;}
-
-  /* ---------- footer ---------- */
-  .footer{
-    position:relative;
-    min-height:64vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    overflow:hidden;
-  }
-  .footer-bg{
-    position:absolute; inset:0;
-    background-image:url('images/venue-bg.jpg');
-    background-size:cover;
-    background-position:center 20%;
-  }
-  .footer-overlay{
-    position:absolute; inset:0;
-    background:linear-gradient(180deg, var(--maroon-deep) 0%, rgba(58,14,20,0.55) 18%, rgba(45,10,16,0.55) 70%, var(--maroon-deep) 100%);
-  }
-  .footer-content{ position:relative; z-index:3; padding:60px 24px; }
-  .footer-mark{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    margin-bottom:22px;
-  }
-  .footer-mark .mark-line{ width:38px; animation:none; transform:scaleX(1); }
-  .footer-mark .mark-diamond{ width:7px; height:7px; animation:none; transform:rotate(45deg) scale(1); }
-  .footer-note{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:22px;
-    color:var(--ivory-2);
-    max-width:420px;
-    margin:0 auto 18px;
-    line-height:1.6;
-  }
-  .footer-note.te-font{ font-family:'Baloo Tammudu 2', sans-serif; font-style:normal; font-size:18px;}
-  .footer-fine{
-    font-size:12px;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--gold-soft);
-    opacity:0.75;
-  }
-  .footer-fine.te-font{ letter-spacing:0.05em; font-family:'Baloo Tammudu 2', sans-serif;}
-</style>
-</head>
-<body data-lang="en">
-
-<div class="lang-toggle" role="group" aria-label="Language selector">
-  <button class="en-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-  <button class="te-btn" data-lang="te" onclick="setLang('te')">తె</button>
-</div>
-
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-
-  <svg class="gopuram" viewBox="0 0 640 220" preserveAspectRatio="xMidYMax meet" style="position:relative;z-index:5;margin-top:34px;">
-    <defs>
-      <linearGradient id="goldline" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#f0c05a"/>
-        <stop offset="100%" stop-color="#a9800f"/>
-      </linearGradient>
-    </defs>
-    <!-- tiered gopuram silhouette, drawn on load -->
-    <g fill="none" stroke="url(#goldline)" stroke-width="2.2" opacity="0.92">
-      <path class="gopuram-path" pathLength="1" d="M60,210 Q60,150 120,140 Q80,120 100,90 Q140,105 150,75 Q170,95 200,70 Q230,95 250,60 Q270,90 320,40 Q370,90 390,60 Q410,95 440,70 Q470,95 490,75 Q500,105 540,90 Q560,120 520,140 Q580,150 580,210"/>
-      <circle class="gopuram-dot" cx="320" cy="30" r="7" fill="#f0c05a" stroke="none"/>
-      <path class="gopuram-base" pathLength="1" d="M20,210 L620,210" stroke-width="1.4" opacity="0.6"/>
-    </g>
-  </svg>
-
-  <div class="mark-wrap reveal">
-    <span class="mark-line"></span>
-    <span class="mark-diamond"></span>
-    <span class="mark-line right"></span>
-  </div>
-
-  <div class="hero-names reveal">
-    <div class="hero-eyebrow en">Together with their families</div>
-    <div class="hero-eyebrow te te-font">కుటుంబ సభ్యుల ఆశీస్సులతో</div>
-
-    <h1 class="hero-title en">Sumanth<span class="weds">weds</span>Kalpana</h1>
-    <h1 class="hero-title te te-font">సుమంత్<span class="weds">వెడ్స్</span>కల్పన</h1>
-
-    <div class="hero-date en">Thursday · 27th August 2026</div>
-    <div class="hero-date te te-font">గురువారం · 27 ఆగస్టు 2026</div>
-  </div>
-
-  <div class="scroll-cue reveal"></div>
-</section>
-
-<!-- ================= MUHURTHAM ================= -->
-<section class="section">
-  <div class="section-eyebrow en reveal">The Auspicious Hour</div>
-  <div class="section-eyebrow te te-font reveal">శుభ ఘడియ</div>
-  <h2 class="section-title en reveal">Muhurtham</h2>
-  <h2 class="section-title te te-font reveal">శుభ ముహూర్తం</h2>
-
-  <div class="card reveal">
-    <div class="card-icon">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="24" cy="24" r="17" stroke="#c9a227" stroke-width="1.6"/>
-        <path d="M24 14v10l7 5" stroke="#eecb6a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M24 6v3M24 39v3M6 24h3M39 24h3" stroke="#c9a227" stroke-width="1.6" stroke-linecap="round"/>
-      </svg>
-    </div>
-
-    <div class="muhurtham-day en">Thursday, 27th August 2026</div>
-    <div class="muhurtham-day te te-font">గురువారం, 27 ఆగస్టు 2026</div>
-
-    <div class="muhurtham-time en">9:53 – 10:04<span class="amp">am</span></div>
-    <div class="muhurtham-time te te-font">9:53 – 10:04<span class="amp">ఉదయం</span></div>
-
-    <span class="lagnam-pill en">Thula Lagnam</span>
-    <span class="lagnam-pill te te-font">తుల లగ్నం</span>
-
-    <p class="muhurtham-sub en">We invite you to bless the couple as they begin their journey together at this sacred moment.</p>
-    <p class="muhurtham-sub te te-font">ఈ శుభ ఘడియలో నూతన జీవితం ప్రారంభించే జంటను ఆశీర్వదించమని మిమ్మల్ని ఆహ్వానిస్తున్నాము.</p>
-  </div>
-</section>
-
-<!-- ================= VENUE ================= -->
-<section class="section venue-section">
-  <div class="section-eyebrow en reveal">Join us at</div>
-  <div class="section-eyebrow te te-font reveal">వేదిక</div>
-  <h2 class="section-title en reveal">The Venue</h2>
-  <h2 class="section-title te te-font reveal">వేదిక వివరాలు</h2>
-
-  <div class="card reveal">
-    <div class="card-icon">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M24 6C16.8 6 11 11.8 11 19c0 10 13 23 13 23s13-13 13-23c0-7.2-5.8-13-13-13Z" stroke="#c9a227" stroke-width="1.6" stroke-linejoin="round"/>
-        <circle cx="24" cy="19" r="5" stroke="#eecb6a" stroke-width="1.6"/>
-      </svg>
-    </div>
-
-    <div class="venue-name en">Siva Gardens</div>
-    <div class="venue-name te te-font">శివ గార్డెన్స్</div>
-
-    <div class="venue-address en">Mahanandi Road, Nandyala,<br>Kurnool District, Andhra Pradesh</div>
-    <div class="venue-address te te-font">మహానంది రోడ్, నంద్యాల,<br>కర్నూలు జిల్లా, ఆంధ్రప్రదేశ్</div>
-
-    <div class="lunch-note en">Lunch Follows</div>
-    <div class="lunch-note te te-font">తదుపరి మధ్యాహ్న భోజనం</div>
-
-    <div class="qr-block">
-      <a href="https://www.google.com/maps/search/?api=1&query=Siva+Gardens+Mahanandi+Road+Nandyala+Kurnool+Andhra+Pradesh" target="_blank" rel="noopener" class="qr-frame" aria-label="Open venue location in Google Maps">
-        <img src="images/qr-code.png" alt="Scan to open venue location in Google Maps">
-      </a>
-      <div class="qr-caption en">Scan the code — or tap it — to open the venue in Google Maps</div>
-      <div class="qr-caption te te-font">మ్యాప్‌లో వేదికను తెరవడానికి కోడ్‌ను స్కాన్ చేయండి</div>
-
-      <a class="directions-btn en" href="https://www.google.com/maps/search/?api=1&query=Siva+Gardens+Mahanandi+Road+Nandyala+Kurnool+Andhra+Pradesh" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 2 21l10-5 10 5L12 2Z" fill="currentColor"/></svg>
-        Get Directions
-      </a>
-      <a class="directions-btn te te-font" href="https://www.google.com/maps/search/?api=1&query=Siva+Gardens+Mahanandi+Road+Nandyala+Kurnool+Andhra+Pradesh" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 2 21l10-5 10 5L12 2Z" fill="currentColor"/></svg>
-        దిశలు పొందండి
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAMILY ================= -->
-<section class="section">
-  <div class="section-eyebrow en reveal">With the blessings of</div>
-  <div class="section-eyebrow te te-font reveal">ఆశీర్వాదాలతో</div>
-  <h2 class="section-title en reveal">Our Families</h2>
-  <h2 class="section-title te te-font reveal">కుటుంబ సభ్యులు</h2>
-
-  <div class="family-grid reveal">
-    <div class="family-col">
-      <div class="family-role en">The Groom</div>
-      <div class="family-role te te-font">వరుడు</div>
-      <div class="family-name">Sumanth</div>
-      <div class="family-parents en">S/o Sri S. Sekhar<br>&amp; Smt. S. Lakshmi</div>
-      <div class="family-parents te te-font">శ్రీ ఎస్. శేఖర్<br>&amp; శ్రీమతి ఎస్. లక్ష్మి దంపతుల కుమారుడు</div>
-    </div>
-    <div class="family-col">
-      <div class="family-role en">The Bride</div>
-      <div class="family-role te te-font">వధువు</div>
-      <div class="family-name">Kalpana</div>
-      <div class="family-parents en">D/o Sri M. R. G. Sreenivasulu<br>&amp; Smt. Kamala</div>
-      <div class="family-parents te te-font">శ్రీ ఎం. ఆర్. జి. శ్రీనివాసులు<br>&amp; శ్రీమతి కమల దంపతుల కుమార్తె</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="footer-bg"></div>
-  <div class="footer-overlay"></div>
-  <div class="footer-content reveal">
-    <div class="footer-mark">
-      <span class="mark-line"></span>
-      <span class="mark-diamond"></span>
-      <span class="mark-line right"></span>
-    </div>
-    <p class="footer-note en">Your presence is the greatest gift of all —<br>we can't wait to celebrate with you.</p>
-    <p class="footer-note te te-font">మీ ఆశీర్వాద సమక్షమే మాకు అమూల్యమైన కానుక —<br>మీతో కలిసి వేడుకను జరుపుకోవాలని ఎదురుచూస్తున్నాము.</p>
-    <div class="footer-fine en">Sumanth &amp; Kalpana · 27 August 2026</div>
-    <div class="footer-fine te te-font">సుమంత్ &amp; కల్పన · 27 ఆగస్టు 2026</div>
-  </div>
-</footer>
-
-<script>
-  // ---------- language toggle ----------
-  function setLang(lang){
-    document.body.setAttribute('data-lang', lang);
-    document.querySelectorAll('.lang-toggle button').forEach(b=>{
-      b.classList.toggle('active', b.dataset.lang === lang);
-    });
-    document.documentElement.setAttribute('lang', lang);
-  }
-
-  // ---------- scroll reveal ----------
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('in');
-        io.unobserve(e.target);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sumanth weds Kalpana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Baloo+Tammudu+2:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --maroon-deep: #4a1420;
+        --maroon: #6b1e2c;
+        --maroon-light: #8a2e3d;
+        --gold: #c9a227;
+        --gold-bright: #eecb6a;
+        --gold-soft: #d9bd76;
+        --ivory: #f7ecd9;
+        --ivory-2: #fbf5e8;
+        --ink: #3a0e14;
+        --shadow-deep: 0 20px 60px rgba(20, 4, 8, 0.45);
       }
-    });
-  }, { threshold:0.15 });
-  revealEls.forEach(el=>io.observe(el));
-</script>
 
-</body>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--maroon-deep);
+        color: var(--ivory);
+        font-family: "EB Garamond", serif;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body[data-lang="te"] .en {
+        display: none;
+      }
+      body[data-lang="en"] .te {
+        display: none;
+      }
+      body[data-lang="te"] .te-font {
+        font-family: "Baloo Tammudu 2", "EB Garamond", sans-serif;
+      }
+
+      /* ---------- reduced motion ---------- */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      /* ---------- language toggle ---------- */
+      .lang-toggle {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 200;
+        display: flex;
+        background: rgba(74, 20, 32, 0.55);
+        border: 1px solid rgba(238, 203, 106, 0.5);
+        border-radius: 999px;
+        padding: 4px;
+        backdrop-filter: blur(6px);
+      }
+      .lang-toggle button {
+        border: none;
+        background: transparent;
+        color: var(--ivory);
+        font-family: "Cinzel", serif;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        padding: 7px 16px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.35s ease;
+      }
+      .lang-toggle button.active {
+        background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+        color: var(--maroon-deep);
+        font-weight: 700;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      .lang-toggle button.te-btn {
+        font-family: "Baloo Tammudu 2", sans-serif;
+      }
+
+      /* ---------- reveal on scroll (minimal, fade only) ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(10px);
+        transition:
+          opacity 1.1s ease-out,
+          transform 1.1s ease-out;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ================= HERO ================= */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+        overflow: hidden;
+        padding-bottom: 56px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-image: url("images/hero-bg.jpg");
+        background-size: cover;
+        background-position: center 22%;
+        transform: scale(1.04);
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(74, 20, 32, 0.35) 0%,
+            rgba(58, 14, 20, 0.25) 38%,
+            rgba(45, 10, 16, 0.72) 78%,
+            rgba(35, 8, 12, 0.92) 100%
+          ),
+          linear-gradient(120deg, rgba(74, 20, 32, 0.35), rgba(30, 7, 11, 0.35));
+      }
+
+      .gopuram {
+        position: relative;
+        z-index: 5;
+        width: 100%;
+        max-width: 640px;
+        margin-top: 38px;
+      }
+
+      .gopuram-path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: gopDraw 1.7s cubic-bezier(0.3, 0.6, 0.15, 1) forwards;
+        animation-delay: 0.1s;
+      }
+      .gopuram-base {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: gopDraw 0.9s ease-out forwards;
+        animation-delay: 1.5s;
+      }
+      .gopuram-dot {
+        opacity: 0;
+        animation: dotFade 0.5s ease-out forwards;
+        animation-delay: 1.5s;
+      }
+      @keyframes gopDraw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes dotFade {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .mark-wrap {
+        position: relative;
+        z-index: 6;
+        margin-top: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+      }
+      .mark-line {
+        height: 1px;
+        width: 46px;
+        background: linear-gradient(90deg, transparent, var(--gold-soft));
+        transform-origin: right center;
+        animation: lineGrow 0.9s ease-out forwards;
+        animation-delay: 1.5s;
+        transform: scaleX(0);
+      }
+      .mark-line.right {
+        background: linear-gradient(90deg, var(--gold-soft), transparent);
+        transform-origin: left center;
+      }
+      @keyframes lineGrow {
+        to {
+          transform: scaleX(1);
+        }
+      }
+      .mark-diamond {
+        width: 9px;
+        height: 9px;
+        background: var(--gold-bright);
+        transform: rotate(45deg) scale(0);
+        animation: diamondPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        animation-delay: 2.15s;
+      }
+      @keyframes diamondPop {
+        to {
+          transform: rotate(45deg) scale(1);
+        }
+      }
+      @keyframes monoIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .hero-names {
+        position: relative;
+        z-index: 6;
+        margin-top: 20px;
+        padding: 0 20px;
+      }
+      .hero-eyebrow {
+        font-family: "Cinzel", serif;
+        font-size: 11px;
+        letter-spacing: 0.42em;
+        color: var(--gold-bright);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .hero-eyebrow.te-font {
+        letter-spacing: 0.1em;
+      }
+
+      .hero-title {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-size: clamp(38px, 8vw, 74px);
+        line-height: 1.08;
+        color: var(--ivory-2);
+        text-shadow: 0 4px 26px rgba(0, 0, 0, 0.55);
+      }
+      .hero-title .weds {
+        display: block;
+        font-style: italic;
+        font-weight: 500;
+        font-size: 0.4em;
+        color: var(--gold-bright);
+        margin: 10px 0;
+        letter-spacing: 0.15em;
+      }
+      .hero-title.te-font {
+        font-weight: 600;
+        font-size: clamp(34px, 7.4vw, 62px);
+      }
+      .hero-title.te-font .weds {
+        font-style: normal;
+        font-size: 0.44em;
+      }
+
+      .hero-date {
+        margin-top: 22px;
+        font-family: "Cinzel", serif;
+        font-size: 13px;
+        letter-spacing: 0.32em;
+        color: var(--ivory);
+        text-transform: uppercase;
+      }
+      .hero-date.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        letter-spacing: 0.06em;
+        font-size: 15px;
+      }
+
+      .scroll-cue {
+        position: relative;
+        z-index: 6;
+        margin-top: 34px;
+        width: 22px;
+        height: 36px;
+        border: 2px solid var(--gold-soft);
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        padding-top: 6px;
+      }
+      .scroll-cue::before {
+        content: "";
+        width: 4px;
+        height: 8px;
+        background: var(--gold-bright);
+        border-radius: 3px;
+        animation: sc 3.2s ease-in-out infinite;
+      }
+      @keyframes sc {
+        0% {
+          transform: translateY(0);
+          opacity: 0.9;
+        }
+        70% {
+          transform: translateY(7px);
+          opacity: 0.25;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 0;
+        }
+      }
+
+      /* ================= SHARED SECTION STYLES ================= */
+      .section {
+        position: relative;
+        padding: 90px 22px;
+        background:
+          radial-gradient(
+            1200px 600px at 50% -10%,
+            rgba(107, 30, 44, 0.5),
+            transparent 60%
+          ),
+          var(--maroon-deep);
+      }
+      .section-eyebrow {
+        text-align: center;
+        font-family: "Cinzel", serif;
+        font-size: 11px;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold-bright);
+        margin-bottom: 12px;
+      }
+      .section-eyebrow.te-font {
+        letter-spacing: 0.08em;
+        font-size: 14px;
+      }
+      .section-title {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-style: italic;
+        font-size: clamp(30px, 5.6vw, 46px);
+        color: var(--ivory-2);
+        margin-bottom: 56px;
+      }
+      .section-title.te-font {
+        font-style: normal;
+        font-weight: 600;
+      }
+
+      /* ---------- ornate card ---------- */
+      .card {
+        max-width: 560px;
+        margin: 0 auto;
+        background: linear-gradient(
+          180deg,
+          rgba(247, 236, 217, 0.06),
+          rgba(247, 236, 217, 0.02)
+        );
+        border: 1px solid rgba(201, 162, 39, 0.45);
+        border-radius: 6px;
+        padding: 44px 30px 40px;
+        position: relative;
+        box-shadow: var(--shadow-deep);
+      }
+      .card::before,
+      .card::after {
+        content: "";
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        border: 2px solid var(--gold);
+        opacity: 0.85;
+      }
+      .card::before {
+        top: 10px;
+        left: 10px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .card::after {
+        bottom: 10px;
+        right: 10px;
+        border-left: none;
+        border-top: none;
+      }
+
+      .card-icon {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 18px;
+      }
+      .card-icon svg {
+        width: 46px;
+        height: 46px;
+      }
+
+      .muhurtham-day {
+        text-align: center;
+        font-family: "Cinzel", serif;
+        font-size: 15px;
+        letter-spacing: 0.14em;
+        color: var(--gold-bright);
+        margin-bottom: 6px;
+      }
+      .muhurtham-day.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        letter-spacing: 0.03em;
+        font-size: 17px;
+      }
+
+      .muhurtham-time {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-size: clamp(34px, 6vw, 50px);
+        color: var(--ivory-2);
+        margin: 8px 0 10px;
+      }
+      .muhurtham-time .amp {
+        font-size: 0.42em;
+        letter-spacing: 0.1em;
+        color: var(--gold-soft);
+        margin-left: 6px;
+        font-style: italic;
+      }
+
+      .lagnam-pill {
+        display: block;
+        width: fit-content;
+        margin: 18px auto 0;
+        padding: 9px 26px;
+        border: 1px solid var(--gold);
+        border-radius: 999px;
+        font-family: "Cinzel", serif;
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        color: var(--gold-bright);
+        text-transform: uppercase;
+      }
+      .lagnam-pill.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        letter-spacing: 0.03em;
+        font-size: 15px;
+      }
+
+      .muhurtham-sub {
+        text-align: center;
+        margin-top: 22px;
+        font-size: 17px;
+        color: var(--ivory);
+        opacity: 0.85;
+        font-style: italic;
+        line-height: 1.6;
+      }
+      .muhurtham-sub.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        font-style: normal;
+        font-size: 16px;
+      }
+
+      /* ---------- venue section ---------- */
+      .venue-section {
+        background: linear-gradient(
+          180deg,
+          var(--maroon-deep),
+          var(--maroon) 40%,
+          var(--maroon-deep)
+        );
+      }
+      .venue-name {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-size: clamp(28px, 5.2vw, 38px);
+        color: var(--gold-bright);
+        margin-bottom: 10px;
+      }
+      .venue-name.te-font {
+        font-weight: 600;
+      }
+      .venue-address {
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.7;
+        color: var(--ivory);
+        opacity: 0.92;
+        margin-bottom: 8px;
+      }
+      .venue-address.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        font-size: 17px;
+      }
+
+      .lunch-note {
+        text-align: center;
+        margin-top: 20px;
+        font-family: "Cinzel", serif;
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+      }
+      .lunch-note.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        letter-spacing: 0.05em;
+        font-size: 15px;
+      }
+
+      .qr-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 34px;
+        padding-top: 30px;
+        border-top: 1px dashed rgba(201, 162, 39, 0.4);
+      }
+      .qr-frame {
+        width: 150px;
+        height: 150px;
+        padding: 10px;
+        background: var(--ivory-2);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+      .qr-frame:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 16px 38px rgba(0, 0, 0, 0.5);
+      }
+      .qr-frame img {
+        width: 100%;
+        height: 100%;
+      }
+      .qr-caption {
+        margin-top: 14px;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        color: var(--ivory);
+        opacity: 0.85;
+        text-align: center;
+      }
+      .qr-caption.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        font-size: 15px;
+      }
+
+      .directions-btn {
+        margin-top: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 28px;
+        background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+        color: var(--maroon-deep);
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 999px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .directions-btn.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        letter-spacing: 0.02em;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .directions-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      }
+      .directions-btn svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* ---------- family section ---------- */
+      .family-grid {
+        max-width: 640px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+      @media (max-width: 540px) {
+        .family-grid {
+          grid-template-columns: 1fr;
+          gap: 34px;
+        }
+      }
+      .family-col {
+        text-align: center;
+      }
+      .family-role {
+        font-family: "Cinzel", serif;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        margin-bottom: 10px;
+      }
+      .family-role.te-font {
+        letter-spacing: 0.05em;
+        font-size: 14px;
+      }
+      .family-name {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-size: 26px;
+        color: var(--ivory-2);
+        margin-bottom: 10px;
+      }
+      .family-parents {
+        font-size: 15.5px;
+        color: var(--ivory);
+        opacity: 0.82;
+        line-height: 1.7;
+      }
+      .family-parents.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        font-size: 15px;
+      }
+
+      /* ---------- footer ---------- */
+      .footer {
+        position: relative;
+        min-height: 64vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+      }
+      .footer-bg {
+        position: absolute;
+        inset: 0;
+        background-image: url("images/venue-bg.jpg");
+        background-size: cover;
+        background-position: center 20%;
+      }
+      .footer-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          var(--maroon-deep) 0%,
+          rgba(58, 14, 20, 0.55) 18%,
+          rgba(45, 10, 16, 0.55) 70%,
+          var(--maroon-deep) 100%
+        );
+      }
+      .footer-content {
+        position: relative;
+        z-index: 3;
+        padding: 60px 24px;
+      }
+      .footer-mark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+      .footer-mark .mark-line {
+        width: 38px;
+        animation: none;
+        transform: scaleX(1);
+      }
+      .footer-mark .mark-diamond {
+        width: 7px;
+        height: 7px;
+        animation: none;
+        transform: rotate(45deg) scale(1);
+      }
+      .footer-note {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 22px;
+        color: var(--ivory-2);
+        max-width: 420px;
+        margin: 0 auto 18px;
+        line-height: 1.6;
+      }
+      .footer-note.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        font-style: normal;
+        font-size: 18px;
+      }
+      .footer-fine {
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        opacity: 0.75;
+      }
+      .footer-fine.te-font {
+        letter-spacing: 0.05em;
+        font-family: "Baloo Tammudu 2", sans-serif;
+      }
+    </style>
+  </head>
+  <body data-lang="en">
+    <div class="lang-toggle" role="group" aria-label="Language selector">
+      <button class="en-btn active" data-lang="en" onclick="setLang('en')">
+        EN
+      </button>
+      <button class="te-btn" data-lang="te" onclick="setLang('te')">తె</button>
+    </div>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+
+      <svg
+        class="gopuram"
+        viewBox="0 0 640 220"
+        preserveAspectRatio="xMidYMax meet"
+        style="position: relative; z-index: 5; margin-top: 34px"
+      >
+        <defs>
+          <linearGradient id="goldline" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f0c05a" />
+            <stop offset="100%" stop-color="#a9800f" />
+          </linearGradient>
+        </defs>
+        <!-- tiered gopuram silhouette, drawn on load -->
+        <g
+          fill="none"
+          stroke="url(#goldline)"
+          stroke-width="2.2"
+          opacity="0.92"
+        >
+          <path
+            class="gopuram-path"
+            pathLength="1"
+            d="M60,210 Q60,150 120,140 Q80,120 100,90 Q140,105 150,75 Q170,95 200,70 Q230,95 250,60 Q270,90 320,40 Q370,90 390,60 Q410,95 440,70 Q470,95 490,75 Q500,105 540,90 Q560,120 520,140 Q580,150 580,210"
+          />
+          <circle
+            class="gopuram-dot"
+            cx="320"
+            cy="30"
+            r="7"
+            fill="#f0c05a"
+            stroke="none"
+          />
+          <path
+            class="gopuram-base"
+            pathLength="1"
+            d="M20,210 L620,210"
+            stroke-width="1.4"
+            opacity="0.6"
+          />
+        </g>
+      </svg>
+
+      <div class="mark-wrap reveal">
+        <span class="mark-line"></span>
+        <span class="mark-diamond"></span>
+        <span class="mark-line right"></span>
+      </div>
+
+      <div class="hero-names reveal">
+        <div class="hero-eyebrow en">Together with their families</div>
+        <div class="hero-eyebrow te te-font">కుటుంబ సభ్యుల ఆశీస్సులతో</div>
+
+        <h1 class="hero-title en">
+          Sumanth<span class="weds">weds</span>Kalpana
+        </h1>
+        <h1 class="hero-title te te-font">
+          సుమంత్<span class="weds">వెడ్స్</span>కల్పన
+        </h1>
+
+        <div class="hero-date en">Thursday · 27th August 2026</div>
+        <div class="hero-date te te-font">గురువారం · 27 ఆగస్టు 2026</div>
+      </div>
+
+      <div class="scroll-cue reveal"></div>
+    </section>
+
+    <!-- ================= MUHURTHAM ================= -->
+    <section class="section">
+      <div class="section-eyebrow en reveal">The Auspicious Hour</div>
+      <div class="section-eyebrow te te-font reveal">శుభ ఘడియ</div>
+      <h2 class="section-title en reveal">Muhurtham</h2>
+      <h2 class="section-title te te-font reveal">శుభ ముహూర్తం</h2>
+
+      <div class="card reveal">
+        <div class="card-icon">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="24"
+              cy="24"
+              r="17"
+              stroke="#c9a227"
+              stroke-width="1.6"
+            />
+            <path
+              d="M24 14v10l7 5"
+              stroke="#eecb6a"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M24 6v3M24 39v3M6 24h3M39 24h3"
+              stroke="#c9a227"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+
+        <div class="muhurtham-day en">Thursday, 27th August 2026</div>
+        <div class="muhurtham-day te te-font">గురువారం, 27 ఆగస్టు 2026</div>
+
+        <div class="muhurtham-time en">
+          9:53 – 10:03<span class="amp">am</span>
+        </div>
+        <div class="muhurtham-time te te-font">
+          9:53 – 10:04<span class="amp">ఉదయం</span>
+        </div>
+
+        <span class="lagnam-pill en">Thula Lagnam</span>
+        <span class="lagnam-pill te te-font">తుల లగ్నం</span>
+
+        <p class="muhurtham-sub en">
+          We invite you to bless the couple as they begin their journey together
+          at this sacred moment.
+        </p>
+        <p class="muhurtham-sub te te-font">
+          ఈ శుభ ఘడియలో నూతన జీవితం ప్రారంభించే జంటను ఆశీర్వదించమని మిమ్మల్ని
+          ఆహ్వానిస్తున్నాము.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= VENUE ================= -->
+    <section class="section venue-section">
+      <div class="section-eyebrow en reveal">Join us at</div>
+      <div class="section-eyebrow te te-font reveal">వేదిక</div>
+      <h2 class="section-title en reveal">The Venue</h2>
+      <h2 class="section-title te te-font reveal">వేదిక వివరాలు</h2>
+
+      <div class="card reveal">
+        <div class="card-icon">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 6C16.8 6 11 11.8 11 19c0 10 13 23 13 23s13-13 13-23c0-7.2-5.8-13-13-13Z"
+              stroke="#c9a227"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <circle cx="24" cy="19" r="5" stroke="#eecb6a" stroke-width="1.6" />
+          </svg>
+        </div>
+
+        <div class="venue-name en">Siva Gardens</div>
+        <div class="venue-name te te-font">శివ గార్డెన్స్</div>
+
+        <div class="venue-address en">
+          Mahanandi Road, Nandyala,<br />Kurnool District, Andhra Pradesh
+        </div>
+        <div class="venue-address te te-font">
+          మహానంది రోడ్, నంద్యాల,<br />కర్నూలు జిల్లా, ఆంధ్రప్రదేశ్
+        </div>
+
+        <div class="lunch-note en">Lunch Follows</div>
+        <div class="lunch-note te te-font">తదుపరి మధ్యాహ్న భోజనం</div>
+
+        <div class="qr-block">
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Siva+Gardens+Mahanandi+Road+Nandyala+Kurnool+Andhra+Pradesh"
+            target="_blank"
+            rel="noopener"
+            class="qr-frame"
+            aria-label="Open venue location in Google Maps"
+          >
+            <img
+              src="images/qr-code.png"
+              alt="Scan to open venue location in Google Maps"
+            />
+          </a>
+          <div class="qr-caption en">
+            Scan the code — or tap it — to open the venue in Google Maps
+          </div>
+          <div class="qr-caption te te-font">
+            మ్యాప్‌లో వేదికను తెరవడానికి కోడ్‌ను స్కాన్ చేయండి
+          </div>
+
+          <a
+            class="directions-btn en"
+            href="https://www.google.com/maps/search/?api=1&query=Siva+Gardens+Mahanandi+Road+Nandyala+Kurnool+Andhra+Pradesh"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2 2 21l10-5 10 5L12 2Z" fill="currentColor" />
+            </svg>
+            Get Directions
+          </a>
+          <a
+            class="directions-btn te te-font"
+            href="https://www.google.com/maps/search/?api=1&query=Siva+Gardens+Mahanandi+Road+Nandyala+Kurnool+Andhra+Pradesh"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2 2 21l10-5 10 5L12 2Z" fill="currentColor" />
+            </svg>
+            దిశలు పొందండి
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAMILY ================= -->
+    <section class="section">
+      <div class="section-eyebrow en reveal">With the blessings of</div>
+      <div class="section-eyebrow te te-font reveal">ఆశీర్వాదాలతో</div>
+      <h2 class="section-title en reveal">Our Families</h2>
+      <h2 class="section-title te te-font reveal">కుటుంబ సభ్యులు</h2>
+
+      <div class="family-grid reveal">
+        <div class="family-col">
+          <div class="family-role en">The Groom</div>
+          <div class="family-role te te-font">వరుడు</div>
+          <div class="family-name">Sumanth</div>
+          <div class="family-parents en">
+            S/o Sri S. Sekhar<br />&amp; Smt. S. Lakshmi
+          </div>
+          <div class="family-parents te te-font">
+            శ్రీ ఎస్. శేఖర్<br />&amp; శ్రీమతి ఎస్. లక్ష్మి దంపతుల కుమారుడు
+          </div>
+        </div>
+        <div class="family-col">
+          <div class="family-role en">The Bride</div>
+          <div class="family-role te te-font">వధువు</div>
+          <div class="family-name">Kalpana</div>
+          <div class="family-parents en">
+            D/o Sri M. R. G. Sreenivasulu<br />&amp; Smt. Kamala
+          </div>
+          <div class="family-parents te te-font">
+            శ్రీ ఎం. ఆర్. జి. శ్రీనివాసులు<br />&amp; శ్రీమతి కమల దంపతుల
+            కుమార్తె
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="footer-bg"></div>
+      <div class="footer-overlay"></div>
+      <div class="footer-content reveal">
+        <div class="footer-mark">
+          <span class="mark-line"></span>
+          <span class="mark-diamond"></span>
+          <span class="mark-line right"></span>
+        </div>
+        <p class="footer-note en">
+          Your presence is the greatest gift of all —<br />we can't wait to
+          celebrate with you.
+        </p>
+        <p class="footer-note te te-font">
+          మీ ఆశీర్వాద సమక్షమే మాకు అమూల్యమైన కానుక —<br />మీతో కలిసి వేడుకను
+          జరుపుకోవాలని ఎదురుచూస్తున్నాము.
+        </p>
+        <div class="footer-fine en">Sumanth &amp; Kalpana · 27 August 2026</div>
+        <div class="footer-fine te te-font">
+          సుమంత్ &amp; కల్పన · 27 ఆగస్టు 2026
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // ---------- language toggle ----------
+      function setLang(lang) {
+        document.body.setAttribute("data-lang", lang);
+        document.querySelectorAll(".lang-toggle button").forEach((b) => {
+          b.classList.toggle("active", b.dataset.lang === lang);
+        });
+        document.documentElement.setAttribute("lang", lang);
+      }
+
+      // ---------- scroll reveal ----------
+      const revealEls = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      revealEls.forEach((el) => io.observe(el));
+    </script>
+  </body>
 </html>
