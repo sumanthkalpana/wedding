@@ -24,12 +24,159 @@
         --shadow-deep: 0 20px 60px rgba(20, 4, 8, 0.45);
       }
 
+      /* ================= GALLERY ================= */
+      .gallery-section {
+        position: relative;
+        padding: 88px 0 96px;
+        background: linear-gradient(
+          180deg,
+          var(--maroon-deep),
+          var(--maroon) 40%,
+          var(--maroon-deep)
+        );
+        overflow: hidden;
+      }
+      .gallery-track-wrap {
+        overflow: hidden;
+        width: 100%;
+        -webkit-mask-image: linear-gradient(
+          90deg,
+          transparent,
+          black 6%,
+          black 94%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          90deg,
+          transparent,
+          black 6%,
+          black 94%,
+          transparent
+        );
+      }
+      .gallery-track {
+        display: flex;
+        gap: 18px;
+        width: max-content;
+        padding: 0 18px;
+        animation: galleryScroll 54s linear infinite;
+      }
+      .gallery-track:hover {
+        animation-play-state: paused;
+      }
+      @keyframes galleryScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .gallery-track {
+          animation: none;
+          overflow-x: auto;
+        }
+      }
+      .gallery-item {
+        position: relative;
+        flex: 0 0 auto;
+        width: 210px;
+        height: 270px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(201, 162, 39, 0.4);
+        box-shadow: var(--shadow-deep);
+        cursor: pointer;
+        background: var(--maroon-deep);
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .gallery-fallback {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(
+          160deg,
+          rgba(107, 30, 44, 0.9),
+          rgba(58, 14, 20, 0.96)
+        );
+        color: var(--gold-bright);
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+      .gallery-item:nth-child(3n + 1) .gallery-fallback {
+        filter: hue-rotate(14deg);
+      }
+      .gallery-item:nth-child(3n + 2) .gallery-fallback {
+        filter: hue-rotate(-18deg);
+      }
+      .gallery-item:nth-child(3n) .gallery-fallback {
+        filter: hue-rotate(32deg);
+      }
+      .gallery-fallback svg {
+        width: 32px;
+        height: 32px;
+        opacity: 0.75;
+      }
+      .gallery-caption {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        background: rgba(74, 20, 32, 0.68);
+        border: 1px solid rgba(238, 203, 106, 0.5);
+        color: var(--ivory-2);
+        font-size: 11px;
+        letter-spacing: 0.03em;
+        padding: 4px 11px;
+        border-radius: 999px;
+        backdrop-filter: blur(3px);
+        pointer-events: none;
+      }
+      .gallery-caption.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+      }
+      .gallery-hint {
+        text-align: center;
+        max-width: 460px;
+        margin: 0 auto 40px;
+        font-style: italic;
+        font-size: 15px;
+        color: var(--ivory);
+        opacity: 0.8;
+      }
+      .gallery-hint.te-font {
+        font-family: "Baloo Tammudu 2", sans-serif;
+        font-style: normal;
+        font-size: 14px;
+      }
+
+      .footer {
+        position: relative;
+      }
+
+      .footer-logo {
+        display: block;
+        width: 130px;
+        margin: 18px auto 0;
+        opacity: 0.85;
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-
       html {
         scroll-behavior: smooth;
       }
@@ -1753,6 +1900,1377 @@
       </svg>
     </div>
 
+    <!-- ================= GALLERY ================= -->
+
+    <!-- <section class="gallery-section">
+      <div class="section-eyebrow en reveal">A few favourite moments</div>
+      <div class="section-eyebrow te te-font reveal">
+        కొన్ని ఇష్టమైన క్షణాలు
+      </div>
+      <h2 class="section-title en reveal">Gallery</h2>
+      <h2 class="section-title te te-font reveal">ఫోటో గ్యాలరీ</h2>
+
+      <p class="gallery-hint en reveal">
+        Tap any photo to view it larger and download it.
+      </p>
+      <p class="gallery-hint te te-font reveal">
+        పెద్దదిగా చూడటానికి మరియు డౌన్‌లోడ్ చేయడానికి ఏదైనా ఫోటోను నొక్కండి.
+      </p>
+      <div class="gallery-track-wrap reveal">
+        <div class="gallery-track">
+          <div class="gallery-item">
+            <img
+              src="images/gallery-01.jpg"
+              alt="Wedding photo 1"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 01
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-02.jpg"
+              alt="Wedding photo 2"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 02
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-03.jpg"
+              alt="Wedding photo 3"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 03
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-04.jpg"
+              alt="Wedding photo 4"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 04
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-05.jpg"
+              alt="Wedding photo 5"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 05
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-06.jpg"
+              alt="Wedding photo 6"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 06
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-07.jpg"
+              alt="Wedding photo 7"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 07
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-08.jpg"
+              alt="Wedding photo 8"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 08
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-09.jpg"
+              alt="Wedding photo 9"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 09
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-10.jpg"
+              alt="Wedding photo 10"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 10
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-11.jpg"
+              alt="Wedding photo 11"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 11
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-12.jpg"
+              alt="Wedding photo 12"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 12
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-13.jpg"
+              alt="Wedding photo 13"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 13
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-14.jpg"
+              alt="Wedding photo 14"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 14
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="images/gallery-15.jpg"
+              alt="Wedding photo 15"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 15
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="./images/hero-bg.jpg"
+              alt="Wedding photo 1"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 01
+            </div>
+            <div class="gallery-caption en">Sumanth Kalpana</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-02.jpg"
+              alt="Wedding photo 2"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 02
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-03.jpg"
+              alt="Wedding photo 3"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 03
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-04.jpg"
+              alt="Wedding photo 4"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 04
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-05.jpg"
+              alt="Wedding photo 5"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 05
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-06.jpg"
+              alt="Wedding photo 6"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 06
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-07.jpg"
+              alt="Wedding photo 7"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 07
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-08.jpg"
+              alt="Wedding photo 8"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 08
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-09.jpg"
+              alt="Wedding photo 9"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 09
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-10.jpg"
+              alt="Wedding photo 10"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 10
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-11.jpg"
+              alt="Wedding photo 11"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 11
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-12.jpg"
+              alt="Wedding photo 12"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 12
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-13.jpg"
+              alt="Wedding photo 13"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 13
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-14.jpg"
+              alt="Wedding photo 14"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+              Photo 14
+            </div>
+            <div class="gallery-caption en">Add name</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+          <div class="gallery-item" aria-hidden="true" tabindex="-1">
+            <img
+              src="images/gallery-15.jpg"
+              alt="Wedding photo 15"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+              onclick="openLightbox(this)"
+            />
+            <div class="gallery-fallback" style="display: none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2.5"
+                  y="6"
+                  width="19"
+                  height="14"
+                  rx="2"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+                <path
+                  d="M8 6l1.6-2.4h4.8L16 6"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="4"
+                  stroke="#eecb6a"
+                  stroke-width="1.4"
+                />
+              </svg>
+            </div>
+            <div class="gallery-caption en">Sumanth kalpana</div>
+            <div class="gallery-caption te te-font">పేరు జోడించండి</div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
     <!-- ================= FOOTER ================= -->
     <footer class="footer">
       <div class="footer-bg"></div>
@@ -1764,11 +3282,11 @@
           <span class="mark-line right"></span>
         </div>
         <p class="footer-note en">
-          Your presence is the greatest gift of all -<br />we can't wait to
+          Your presence is the greatest gift of all —<br />we can't wait to
           celebrate with you.
         </p>
         <p class="footer-note te te-font">
-          మీ ఆశీర్వాద సమక్షమే మాకు అమూల్యమైన కానుక -<br />మీతో కలిసి వేడుకను
+          మీ ఆశీర్వాద సమక్షమే మాకు అమూల్యమైన కానుక —<br />మీతో కలిసి వేడుకను
           జరుపుకోవాలని ఎదురుచూస్తున్నాము.
         </p>
         <div class="footer-fine en">Sumanth &amp; Kalpana · 27 August 2026</div>
@@ -1776,6 +3294,11 @@
           సుమంత్ &amp; కల్పన · 27 ఆగస్టు 2026
         </div>
         <div class="footer-credit">Designed by Sumanth Sanathi</div>
+        <img
+          class="footer-logo"
+          src="images/sk.png"
+          alt="Sumanth &amp; Kalpana monogram"
+        />
       </div>
     </footer>
 
